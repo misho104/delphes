@@ -264,7 +264,8 @@ tmp/classes/DelphesClasses.$(ObjSuf): \
 	classes/DelphesClasses.$(SrcSuf) \
 	classes/DelphesClasses.h \
 	classes/DelphesFactory.h \
-	classes/SortableObject.h
+	classes/SortableObject.h \
+	external/fastjet/PseudoJet.hh
 tmp/classes/DelphesPileUpReader.$(ObjSuf): \
 	classes/DelphesPileUpReader.$(SrcSuf) \
 	classes/DelphesPileUpReader.h
@@ -339,7 +340,9 @@ tmp/modules/FastJetFinder.$(ObjSuf): \
 	external/fastjet/tools/JetMedianBackgroundEstimator.hh \
 	external/fastjet/plugins/SISCone/fastjet/SISConePlugin.hh \
 	external/fastjet/plugins/CDFCones/fastjet/CDFMidPointPlugin.hh \
-	external/fastjet/plugins/CDFCones/fastjet/CDFJetCluPlugin.hh
+	external/fastjet/plugins/CDFCones/fastjet/CDFJetCluPlugin.hh \
+	external/fastjet/tools/Filter.hh \
+	external/fastjet/tools/Njettiness.hh
 tmp/modules/StatusPidFilter.$(ObjSuf): \
 	modules/StatusPidFilter.$(SrcSuf) \
 	modules/StatusPidFilter.h \
@@ -1211,8 +1214,9 @@ external/fastjet/LimitedWarning.hh: \
 	external/fastjet/internal/base.hh
 	@touch $@
 
-classes/DelphesClasses.h: \
-	classes/SortableObject.h
+external/fastjet/tools/Njettiness.hh: \
+	external/fastjet/PseudoJet.hh \
+	external/fastjet/ClusterSequence.hh
 	@touch $@
 
 external/fastjet/ClusterSequencePassiveArea.hh: \
