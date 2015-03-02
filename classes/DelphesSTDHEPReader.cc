@@ -87,19 +87,11 @@ bool DelphesSTDHEPReader::ReadBlock(DelphesFactory *factory,
   TObjArray *stableParticleOutputArray,
   TObjArray *partonOutputArray)
 {
-  bool skipNTuples = false;
-
   if(feof(fInputFile)) return kFALSE;
 
   xdr_int(fInputXDR, &fBlockType);
 
   SkipBytes(4);
-
-  xdr_string(fInputXDR, &fBuffer, 100);
-  if(strncmp(fBuffer, "2.00", 4) == 0)
-  {
-    skipNTuples = true;
-  }
 
   if(fBlockType == EVENTTABLE)
   {
@@ -107,7 +99,7 @@ bool DelphesSTDHEPReader::ReadBlock(DelphesFactory *factory,
   }
   else if(fBlockType == EVENTHEADER)
   {
-    ReadSTDHEPHeader(skipNTuples);
+    ReadEventHeader();
   }
   else if(fBlockType == MCFIO_STDHEPBEG ||
           fBlockType == MCFIO_STDHEPEND)
@@ -242,19 +234,49 @@ void DelphesSTDHEPReader::ReadFileHeader()
 
 void DelphesSTDHEPReader::ReadEventTable()
 {
-  SkipBytes(8);
+  // version
+  xdr_string(fInputXDR, &fBuffer, 100);
+  if(strncmp(fBuffer, "1.00", 4) == 0)
+  {
+    SkipBytes(8);
 
-  SkipArray(4);
-  SkipArray(4);
-  SkipArray(4);
-  SkipArray(4);
-  SkipArray(4);
+    SkipArray(4);
+    SkipArray(4);
+    SkipArray(4);
+    SkipArray(4);
+    SkipArray(4);
+  }
+  else if(strncmp(fBuffer, "2.00", 4) == 0)
+  {
+    SkipBytes(12);
+
+    SkipArray(4);
+    SkipArray(4);
+    SkipArray(4);
+    SkipArray(4);
+    SkipArray(8);
+  }
 }
 
 //---------------------------------------------------------------------------
 
-void DelphesSTDHEPReader::ReadSTDHEPHeader(bool skipNTuples)
+void DelphesSTDHEPReader::ReadEventHeader()
 {
+  bool skipNTuples = false;
+  u_int skipSize = 4;
+
+  // version
+  xdr_string(fInputXDR, &fBuffer, 100);
+  if(strncmp(fBuffer, "2.00", 4) == 0)
+  {
+    skipNTuples = true;
+  }
+  else if(strncmp(fBuffer, "3.00", 4) == 0)
+  {
+    skipNTuples = true;
+    skipSize = 8;
+  }
+
   SkipBytes(20);
 
   u_int dimBlocks = 0;
@@ -271,14 +293,14 @@ void DelphesSTDHEPReader::ReadSTDHEPHeader(bool skipNTuples)
   if(dimBlocks > 0)
   {
     SkipArray(4);
-    SkipArray(4);
+    SkipArray(skipSize);
   }
 
   // Processing blocks extraction
   if(skipNTuples && dimNTuples > 0)
   {
     SkipArray(4);
-    SkipArray(4);
+    SkipArray(skipSize);
   }
 }
 
@@ -286,6 +308,9 @@ void DelphesSTDHEPReader::ReadSTDHEPHeader(bool skipNTuples)
 
 void DelphesSTDHEPReader::ReadSTDCM1()
 {
+  // version
+  xdr_string(fInputXDR, &fBuffer, 100);
+
   // skip 5*4 + 2*8 = 36 bytes
   SkipBytes(36);
 
@@ -312,6 +337,9 @@ void DelphesSTDHEPReader::ReadSTDCM1()
 void DelphesSTDHEPReader::ReadSTDHEP()
 {
   u_int idhepSize, isthepSize, jmohepSize, jdahepSize, phepSize, vhepSize;
+
+  // version
+  xdr_string(fInputXDR, &fBuffer, 100);
 
   // Extracting the event number
   xdr_int(fInputXDR, &fEventNumber);
@@ -356,6 +384,9 @@ void DelphesSTDHEPReader::ReadSTDHEP()
 void DelphesSTDHEPReader::ReadSTDHEP4()
 {
   u_int number;
+
+  // version
+  xdr_string(fInputXDR, &fBuffer, 100);
 
   // Extracting the event weight
   xdr_double(fInputXDR, &fWeight);
@@ -460,7 +491,7 @@ void DelphesSTDHEPReader::AnalyzeParticles(DelphesFactory *factory,
 
     pdgParticle = fPDG->GetParticle(pid);
     candidate->Charge = pdgParticle ? int(pdgParticle->Charge()/3.0) : -999;
-    candidate->Mass = mass;
+    candidate->Mass = pdgParticle ? pdgParticle->Mass() : -999.9;
 
     candidate->Momentum.SetPxPyPzE(px, py, pz, e);
 
@@ -470,7 +501,9 @@ void DelphesSTDHEPReader::AnalyzeParticles(DelphesFactory *factory,
 
     if(!pdgParticle) continue;
 
-    if(status == 1 && pdgParticle->Stable())
+    if(status == 1 && (pdgParticle->Stable() or
+      pdgCode == 1000011 or pdgCode == 1000013 or pdgCode == 1000015 or
+      pdgCode == 2000011 or pdgCode == 2000013 or pdgCode == 2000015))
     {
       stableParticleOutputArray->Add(candidate);
     }

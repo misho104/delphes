@@ -35,7 +35,7 @@ public:
 private:
 
   Double_t fRadius, fRadius2, fHalfLength;
-  Double_t fBz;
+  Double_t fBz, fBetaLowCut;
 
   TIterator *fItInputArray; //!
 

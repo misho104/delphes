@@ -29,6 +29,7 @@
 #include "modules/LeptonDressing.h"
 #include "modules/PileUpMerger.h"
 #include "modules/JetPileUpSubtractor.h"
+#include "modules/JetSubStructure.h"
 #include "modules/TrackPileUpSubtractor.h"
 #include "modules/ConstituentFilter.h"
 #include "modules/StatusPidFilter.h"
@@ -60,6 +61,7 @@
 #pragma link C++ class LeptonDressing+;
 #pragma link C++ class PileUpMerger+;
 #pragma link C++ class JetPileUpSubtractor+;
+#pragma link C++ class JetSubStructure+;
 #pragma link C++ class TrackPileUpSubtractor+;
 #pragma link C++ class ConstituentFilter+;
 #pragma link C++ class StatusPidFilter+;

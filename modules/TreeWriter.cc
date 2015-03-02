@@ -64,7 +64,6 @@ void TreeWriter::Init()
   fClassMap[MissingET::Class()] = &TreeWriter::ProcessMissingET;
   fClassMap[ScalarHT::Class()] = &TreeWriter::ProcessScalarHT;
   fClassMap[Rho::Class()] = &TreeWriter::ProcessRho;
-  fClassMap[Weight::Class()] = &TreeWriter::ProcessWeight;
 
   TBranchMap::iterator itBranchMap;
   map< TClass *, TProcessMethod >::iterator itClassMap;
@@ -337,6 +336,7 @@ void TreeWriter::ProcessPhotons(ExRootTreeBranch *branch, TObjArray *array)
 
     entry = static_cast<Photon*>(branch->NewEntry());
 
+    //entry->IsolationVar = candidate->IsolationVar;
     entry->Eta = eta;
     entry->Phi = momentum.Phi();
     entry->PT = pt;
@@ -376,7 +376,7 @@ void TreeWriter::ProcessElectrons(ExRootTreeBranch *branch, TObjArray *array)
     entry->Eta = eta;
     entry->Phi = momentum.Phi();
     entry->PT = pt;
-
+    //entry->IsolationVar = candidate->IsolationVar;
     entry->Charge = candidate->Charge;
 
     entry->EhadOverEem = 0.0;
@@ -416,10 +416,13 @@ void TreeWriter::ProcessMuons(ExRootTreeBranch *branch, TObjArray *array)
     entry->Eta = eta;
     entry->Phi = momentum.Phi();
     entry->PT = pt;
+    //entry->IsolationVar = candidate->IsolationVar;
 
     entry->Charge = candidate->Charge;
 
     entry->Particle = candidate->GetCandidates()->At(0);
+
+    //entry->IsolationVar = -static_cast<Candidate*>(entry->Particle.GetObject())->Momentum.M();
   }
 }
 
@@ -461,6 +464,17 @@ void TreeWriter::ProcessJets(ExRootTreeBranch *branch, TObjArray *array)
 
     entry->BTag = candidate->BTag;
     entry->TauTag = candidate->TauTag;
+    entry->WTag = candidate->WTag;
+    entry->TopTag = candidate->TopTag;
+    entry->HTag = candidate->HTag;
+
+    entry->Tau1=candidate->Tau1;
+    entry->Tau2=candidate->Tau2;
+    entry->Tau3=candidate->Tau3;
+
+    entry->TrimmedMass=candidate->TrimmedMass;
+    entry->NSubJets=candidate->NSubJets;
+    entry->MassDrop=candidate->MassDrop;
 
     entry->Charge = candidate->Charge;
 
@@ -533,24 +547,6 @@ void TreeWriter::ProcessRho(ExRootTreeBranch *branch, TObjArray *array)
     entry = static_cast<Rho*>(branch->NewEntry());
 
     entry->Rho = momentum.E();
-  }
-}
-
-//------------------------------------------------------------------------------
-
-void TreeWriter::ProcessWeight(ExRootTreeBranch *branch, TObjArray *array)
-{
-  Candidate *candidate = 0;
-  Weight *entry = 0;
-
-  // get the first entry
-  if((candidate = static_cast<Candidate*>(array->At(0))))
-  {
-    const TLorentzVector &momentum = candidate->Momentum;
-
-    entry = static_cast<Weight*>(branch->NewEntry());
-
-    entry->Weight = momentum.E();
   }
 }
 

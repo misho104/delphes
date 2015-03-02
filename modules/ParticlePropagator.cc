@@ -60,6 +60,8 @@ void ParticlePropagator::Init()
   fRadius2 = fRadius*fRadius;
   fHalfLength = GetDouble("HalfLength", 3.0);
   fBz = GetDouble("Bz", 0.0);
+  fBetaLowCut = GetDouble("BetaLowCut", 0);
+
   if(fRadius < 1.0E-2)
   { 
     cout << "ERROR: magnetic field radius is too low\n";
@@ -185,6 +187,14 @@ void ParticlePropagator::Process()
           case 13:
             fMuonOutputArray->Add(candidate);
             break;
+          case 1000011:
+          case 1000013:
+          case 1000015:
+          case 2000011:
+          case 2000013:
+          case 2000015:
+            if(candidate->Momentum.Beta() > fBetaLowCut) fMuonOutputArray->Add(candidate);
+            break;
           default:
             fChargedHadronOutputArray->Add(candidate);
         }
@@ -276,6 +286,14 @@ void ParticlePropagator::Process()
             break;
           case 13:
             fMuonOutputArray->Add(candidate);
+            break;
+          case 1000011:
+          case 1000013:
+          case 1000015:
+          case 2000011:
+          case 2000013:
+          case 2000015:
+            if(candidate->Momentum.Beta()> fBetaLowCut) fMuonOutputArray->Add(candidate);
             break;
           default:
             fChargedHadronOutputArray->Add(candidate);

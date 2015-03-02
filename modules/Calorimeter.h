@@ -43,8 +43,8 @@ private:
   Candidate *fTower;
   Double_t fTowerEta, fTowerPhi, fTowerEdges[4];
   Double_t fTowerECalEnergy, fTowerHCalEnergy;
-  Double_t fTowerECalNeutralEnergy, fTowerHCalNeutralEnergy;
-  Int_t fTowerNeutralHits, fTowerPhotonHits, fTowerElectronHits, fTowerTrackHits, fTowerAllHits;
+  Double_t fTrackECalEnergy, fTrackHCalEnergy;
+  Int_t fTowerTrackHits, fTowerPhotonHits;
 
   TFractionMap fFractionMap; //!
   TBinMap fBinMap; //!
@@ -54,8 +54,11 @@ private:
 
   std::vector < Long64_t > fTowerHits;
 
-  std::vector < Double_t > fECalFractions;
-  std::vector < Double_t > fHCalFractions;
+  std::vector < Double_t > fTowerECalFractions;
+  std::vector < Double_t > fTowerHCalFractions;
+
+  std::vector < Double_t > fTrackECalFractions;
+  std::vector < Double_t > fTrackHCalFractions;
 
   DelphesFormula *fECalResolutionFormula; //!
   DelphesFormula *fHCalResolutionFormula; //!
@@ -74,9 +77,6 @@ private:
 
   TObjArray *fTowerTrackArray; //!
   TIterator *fItTowerTrackArray; //!
-
-  TObjArray *fTowerPhotonArray; //!
-  TIterator *fItTowerPhotonArray; //!
 
   void FinalizeTower();
   Double_t LogNormal(Double_t mean, Double_t sigma);
