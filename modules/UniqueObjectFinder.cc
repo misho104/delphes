@@ -103,10 +103,7 @@ void UniqueObjectFinder::Process()
     iterator->Reset();
     while((candidate = static_cast<Candidate*>(iterator->Next())))
     {
-      if(Unique(candidate, itInputMap))
-      {
         array->Add(candidate);
-      }
     }
   }
 }
