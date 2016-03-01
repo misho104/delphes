@@ -8,8 +8,8 @@
  *  Removes all generated particles except electrons, muons, taus,
  *  and particles with status == 3.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-04-07 00:12:34 +0200 (Sun, 07 Apr 2013) $
+ *  $Revision: 1079 $
  *
  *
  *  \author J. Hirschauer - FNAL

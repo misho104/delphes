@@ -1,5 +1,5 @@
 //STARTHEADER
-// $Id$
+// $Id: GridJetPlugin.cc 859 2012-11-28 01:49:23Z pavel $
 //
 // Copyright (c) 2011, Matteo Cacciari, Gavin Salam and Gregory Soyez
 //

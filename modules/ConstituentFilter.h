@@ -5,8 +5,8 @@
  *
  *  Drops all input objects that are not constituents of any jet.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-04-05 10:19:17 +0200 (Fri, 05 Apr 2013) $
+ *  $Revision: 1075 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

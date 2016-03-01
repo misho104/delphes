@@ -3,8 +3,8 @@
  *
  *  Finds uniquely identified photons, electrons and jets.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-02-22 23:00:02 +0100 (Fri, 22 Feb 2013) $
+ *  $Revision: 933 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

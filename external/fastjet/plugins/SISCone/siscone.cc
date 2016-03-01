@@ -20,8 +20,8 @@
 // along with this program; if not, write to the Free Software               //
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA //
 //                                                                           //
-// $Revision::                                                              $//
-// $Date::                                                                  $//
+// $Revision:: 1332                                                         $//
+// $Date:: 2013-11-20 21:52:59 +0100 (Wed, 20 Nov 2013)                     $//
 ///////////////////////////////////////////////////////////////////////////////
 
 //#ifdef HAVE_CONFIG_H

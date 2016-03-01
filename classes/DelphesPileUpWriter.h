@@ -6,8 +6,8 @@
  *  Writes pile-up binary file
  *
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-03-10 01:53:09 +0100 (Sun, 10 Mar 2013) $
+ *  $Revision: 1054 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

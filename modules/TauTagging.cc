@@ -5,8 +5,8 @@
  *  applies b-tagging efficiency (miss identification rate) formulas
  *  and sets b-tagging flags
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-07-12 00:22:27 +0200 (Fri, 12 Jul 2013) $
+ *  $Revision: 1217 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

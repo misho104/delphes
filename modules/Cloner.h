@@ -5,8 +5,8 @@
  *
  *  Clone candidate array
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-04-26 12:42:11 +0200 (Fri, 26 Apr 2013) $
+ *  $Revision: 1100 $
  *
  *  \author M. Selvaggi - UCL, Louvain-la-Neuve
  *

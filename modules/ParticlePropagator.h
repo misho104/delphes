@@ -8,8 +8,8 @@
  *  its half-length, centered at (0,0,0) and with its axis
  *  oriented along the z-axis.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-02-12 14:57:44 +0100 (Tue, 12 Feb 2013) $
+ *  $Revision: 905 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

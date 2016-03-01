@@ -21,8 +21,8 @@
 // along with this program; if not, write to the Free Software               //
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA //
 //                                                                           //
-// $Revision::                                                              $//
-// $Date::                                                                  $//
+// $Revision:: 859                                                          $//
+// $Date:: 2012-11-28 02:49:23 +0100 (Wed, 28 Nov 2012)                     $//
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef __PROTOCONES_H__

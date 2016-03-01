@@ -6,8 +6,8 @@
  *  Reads pile-up binary file
  *
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-03-08 09:25:30 +0100 (Fri, 08 Mar 2013) $
+ *  $Revision: 1046 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

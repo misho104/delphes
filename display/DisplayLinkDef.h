@@ -3,8 +3,8 @@
  *
  *  Lists classes to be included in cint dicitonary
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-04-22 22:00:46 +0200 (Mon, 22 Apr 2013) $
+ *  $Revision: 1097 $
  *
  *  
  *  \author P. Demin - UCL, Louvain-la-Neuve

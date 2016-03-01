@@ -1,5 +1,5 @@
 //STARTHEADER
-// $Id$
+// $Id: Pruner.cc 999 2013-03-04 11:48:06Z pavel $
 //
 // Copyright (c) 2005-2011, Matteo Cacciari, Gavin P. Salam and Gregory Soyez
 //

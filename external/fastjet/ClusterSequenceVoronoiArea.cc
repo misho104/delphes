@@ -1,5 +1,5 @@
 //STARTHEADER
-// $Id$
+// $Id: ClusterSequenceVoronoiArea.cc 859 2012-11-28 01:49:23Z pavel $
 //
 // Copyright (c) 2006-2007 Matteo Cacciari, Gavin Salam and Gregory Soyez
 //

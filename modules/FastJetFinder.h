@@ -5,8 +5,8 @@
  *
  *  Finds jets using FastJet library.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-03-06 18:06:55 +0100 (Wed, 06 Mar 2013) $
+ *  $Revision: 1031 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

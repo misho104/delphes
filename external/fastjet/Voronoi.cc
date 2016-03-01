@@ -1,5 +1,5 @@
 //STARTHEADER
-// $Id$
+// $Id: Voronoi.cc 859 2012-11-28 01:49:23Z pavel $
 //
 // Copyright (c) 1994 by AT&T Bell Laboratories (see below)
 //

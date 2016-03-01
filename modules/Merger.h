@@ -6,8 +6,8 @@
  *  Merges multiple input arrays into one output array
  *  and sums transverse momenta of all input objects.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-02-09 18:32:10 +0100 (Sat, 09 Feb 2013) $
+ *  $Revision: 894 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

@@ -6,8 +6,8 @@
  *  Reads LHEF file
  *
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-08-16 16:29:25 +0200 (Fri, 16 Aug 2013) $
+ *  $Revision: 1265 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

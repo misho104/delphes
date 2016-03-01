@@ -1,5 +1,5 @@
 //STARTHEADER
-// $Id$
+// $Id: ClusterSequenceStructure.cc 1332 2013-11-20 20:52:59Z pavel $
 //
 // Copyright (c) 2005-2011, Matteo Cacciari, Gavin P. Salam and Gregory Soyez
 //

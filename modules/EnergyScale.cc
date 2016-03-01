@@ -3,8 +3,8 @@
  *
  *  Performs transverse momentum resolution smearing.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-06-25 14:42:33 +0200 (Tue, 25 Jun 2013) $
+ *  $Revision: 1141 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

@@ -1,6 +1,6 @@
 //STARTHEADER
 // simple random number generator class taken from nlojet++.
-// $Id$
+// $Id: BasicRandom.cc 859 2012-11-28 01:49:23Z pavel $
 //
 //  Copyright (C) 2002 Zoltan Nagy
 //

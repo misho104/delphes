@@ -6,8 +6,8 @@
  *  Reads STDHEP file
  *
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-05-30 00:47:35 +0200 (Thu, 30 May 2013) $
+ *  $Revision: 1129 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

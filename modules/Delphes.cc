@@ -4,8 +4,8 @@
  *  Main Delphes module.
  *  Controls execution of all other modules.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-06-27 16:57:56 +0200 (Thu, 27 Jun 2013) $
+ *  $Revision: 1151 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

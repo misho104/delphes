@@ -1,5 +1,5 @@
 //STARTHEADER
-// $Id$
+// $Id: ClusterSequence.cc 1332 2013-11-20 20:52:59Z pavel $
 //
 // Copyright (c) 2005-2013, Matteo Cacciari, Gavin P. Salam and Gregory Soyez
 //

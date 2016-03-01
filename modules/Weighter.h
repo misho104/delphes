@@ -5,8 +5,8 @@
  *
  *  Apply a weight depending on PDG code.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-05-27 00:36:00 +0200 (Mon, 27 May 2013) $
+ *  $Revision: 1125 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

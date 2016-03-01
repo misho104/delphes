@@ -6,8 +6,8 @@
  *  to the candidate's transverse momentum. outputs candidates that have
  *  the transverse momenta fraction within (PTRatioMin, PTRatioMax].
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-08-19 15:40:54 +0200 (Mon, 19 Aug 2013) $
+ *  $Revision: 1267 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

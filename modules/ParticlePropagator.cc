@@ -6,8 +6,8 @@
  *  its half-length, centered at (0,0,0) and with its axis
  *  oriented along the z-axis.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-08-13 17:34:45 +0200 (Tue, 13 Aug 2013) $
+ *  $Revision: 1248 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

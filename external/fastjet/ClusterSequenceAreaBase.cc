@@ -1,6 +1,6 @@
 
 //STARTHEADER
-// $Id$
+// $Id: ClusterSequenceAreaBase.cc 859 2012-11-28 01:49:23Z pavel $
 //
 // Copyright (c) 2005-2011, Matteo Cacciari, Gavin P. Salam and Gregory Soyez
 //

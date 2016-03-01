@@ -6,8 +6,8 @@
  *  Reads HepMC file
  *
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-05-07 15:27:32 +0200 (Tue, 07 May 2013) $
+ *  $Revision: 1108 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

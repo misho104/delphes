@@ -5,8 +5,8 @@
  *
  *  Subtract pile-up contribution from tracks.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-03-24 15:08:05 +0100 (Sun, 24 Mar 2013) $
+ *  $Revision: 1069 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

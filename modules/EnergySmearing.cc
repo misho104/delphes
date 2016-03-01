@@ -3,8 +3,8 @@
  *
  *  Performs energy resolution smearing.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-02-22 12:03:12 +0100 (Fri, 22 Feb 2013) $
+ *  $Revision: 927 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

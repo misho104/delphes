@@ -6,8 +6,8 @@
  *  Fills calorimeter towers, performs calorimeter resolution smearing,
  *  preselects towers hit by photons and creates energy flow objects.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-07-22 22:00:23 +0200 (Mon, 22 Jul 2013) $
+ *  $Revision: 1235 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve

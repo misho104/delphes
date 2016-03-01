@@ -3,8 +3,8 @@
  *  Merges particles from pile-up sample into event
  *
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-07-04 13:03:09 +0200 (Thu, 04 Jul 2013) $
+ *  $Revision: 1175 $
  *
  *
  *  \author P. Selvaggi - UCL, Louvain-la-Neuve

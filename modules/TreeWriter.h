@@ -5,8 +5,8 @@
  *
  *  Fills ROOT tree branches.
  *
- *  $Date$
- *  $Revision$
+ *  $Date: 2013-05-26 02:00:39 +0200 (Sun, 26 May 2013) $
+ *  $Revision: 1123 $
  *
  *
  *  \author P. Demin - UCL, Louvain-la-Neuve
