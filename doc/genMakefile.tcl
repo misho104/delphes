@@ -219,18 +219,6 @@ CXXFLAGS += -I$(PROMC)/include
 DELPHES_LIBS += -L$(PROMC)/lib -lprotoc -lprotobuf -lprotobuf-lite -lcbook -lz
 endif
 
-ifneq ($(PYTHIA8),)
-HAS_PYTHIA8 = true
-CXXFLAGS += -I$(PYTHIA8)/include
-DELPHES_LIBS += -L$(PYTHIA8)/lib -lpythia8 -lLHAPDF -lgfortran -lz
-else
-ifneq ($(PYTHIA8DATA),)
-HAS_PYTHIA8 = true
-CXXFLAGS += -I$(PYTHIA8DATA)/../include
-DELPHES_LIBS += -L$(PYTHIA8DATA)/../lib -lpythia8 -lLHAPDF -lgfortran -lz
-endif
-endif
-
 ###
 
 DELPHES = libDelphes.$(DllSuf)
@@ -347,7 +335,7 @@ clean:
 	@rm -rf tmp
 
 distclean: clean
-	@rm -f $(DELPHES) $(DELPHESLIB) $(DISPLAY) $(DISPLAYLIB) $(EXECUTABLE)
+	@rm -f $(DELPHES) $(DELPHESLIB) $(DISPLAY) $(DISPLAYLIB) $(EXECUTABLE) Makefile
 
 dist:
 	@echo ">> Building $(DISTTAR)"
@@ -364,7 +352,7 @@ dist:
 %Dict.$(SrcSuf):
 	@mkdir -p $(@D)
 	@echo ">> Generating $@"
-	@rootcint -f $@ -c -Iexternal $<
+	@$(ROOTCINT) -f $@ -c -Iexternal $<
 	@echo "#define private public" > $@.arch
 	@echo "#define protected public" >> $@.arch
 	@mv $@ $@.base
