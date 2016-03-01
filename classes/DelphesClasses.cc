@@ -96,7 +96,7 @@ Candidate::Candidate() :
   PID(0), Status(0), M1(-1), M2(-1), D1(-1), D2(-1),
   Charge(0), Mass(0.0),
   IsPU(0), IsConstituent(0),
-  BTag(0), TauTag(0), Eem(0.0), Ehad(0.0),
+  EfficiencyFlags(0), IsolationFlags(0), MiscellaneousFlags(0), BFlags(0), BFlagProb(0), TauFlags(0), TauFlagProb(0), Eem(0.0), Ehad(0.0),
   DeltaEta(0.0), DeltaPhi(0.0),
   Momentum(0.0, 0.0, 0.0, 0.0),
   Position(0.0, 0.0, 0.0, 0.0),
@@ -182,8 +182,13 @@ void Candidate::Copy(TObject &obj) const
   object.Mass = Mass;
   object.IsPU = IsPU;
   object.IsConstituent = IsConstituent;
-  object.BTag = BTag;
-  object.TauTag = TauTag;
+  object.EfficiencyFlags = EfficiencyFlags;
+  object.IsolationFlags = IsolationFlags;
+  object.MiscellaneousFlags = MiscellaneousFlags;
+  object.BFlags = BFlags;
+  object.BFlagProb = BFlagProb;
+  object.TauFlags = TauFlags;
+  object.TauFlagProb = TauFlagProb;
   object.Eem = Eem;
   object.Ehad = Ehad;
   object.Edges[0] = Edges[0];
@@ -223,8 +228,13 @@ void Candidate::Clear(Option_t* option)
   Mass = 0.0;
   IsPU = 0;
   IsConstituent = 0;
-  BTag = 0;
-  TauTag = 0;
+  EfficiencyFlags = 0;
+  IsolationFlags = 0;
+  MiscellaneousFlags = 0;
+  BFlags = 0;
+  BFlagProb = 0;
+  TauFlags = 0;
+  TauFlagProb = 0;
   Eem = 0.0;
   Ehad = 0.0;
   Edges[0] = 0.0;

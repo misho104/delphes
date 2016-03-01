@@ -44,6 +44,16 @@ private:
 
   Bool_t fUsePTSum;
 
+  // NEW: flag if limit is evaluated as absolute (1) or relative (0) maximum momentum
+  Int_t fAbsoluteLimit;
+  
+  Int_t fFlagValue; // Candidate's flag is set to this number if efficiency cut is passed
+
+  Bool_t fAddFlag; // If true, FlagNumber is added to the candidate's current flag value.
+                  // If false, it will replace any old value.
+
+  Bool_t fKillUponFail; // If true, only flagged candidates will be written to outputs
+  
   IsolationClassifier *fClassifier; //!
 
   ExRootFilter *fFilter;
@@ -57,7 +67,7 @@ private:
   const TObjArray *fCandidateInputArray; //!
 
   const TObjArray *fRhoInputArray; //!
-
+  
   TObjArray *fOutputArray; //!
 
   ClassDef(Isolation, 1)

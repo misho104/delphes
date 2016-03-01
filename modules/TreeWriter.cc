@@ -341,6 +341,9 @@ void TreeWriter::ProcessPhotons(ExRootTreeBranch *branch, TObjArray *array)
     entry->Phi = momentum.Phi();
     entry->PT = pt;
     entry->E = momentum.E();
+    entry->EfficiencyFlags = candidate->EfficiencyFlags;
+    entry->IsolationFlags = candidate->IsolationFlags;
+    entry->MiscellaneousFlags = candidate->MiscellaneousFlags;
 
     entry->EhadOverEem = candidate->Eem > 0.0 ? candidate->Ehad/candidate->Eem : 999.9;
 
@@ -376,6 +379,10 @@ void TreeWriter::ProcessElectrons(ExRootTreeBranch *branch, TObjArray *array)
     entry->Eta = eta;
     entry->Phi = momentum.Phi();
     entry->PT = pt;
+    
+    entry->EfficiencyFlags = candidate->EfficiencyFlags;
+    entry->IsolationFlags = candidate->IsolationFlags;
+    entry->MiscellaneousFlags = candidate->MiscellaneousFlags;
 
     entry->Charge = candidate->Charge;
 
@@ -416,6 +423,10 @@ void TreeWriter::ProcessMuons(ExRootTreeBranch *branch, TObjArray *array)
     entry->Eta = eta;
     entry->Phi = momentum.Phi();
     entry->PT = pt;
+    
+    entry->EfficiencyFlags = candidate->EfficiencyFlags;
+    entry->IsolationFlags = candidate->IsolationFlags;
+    entry->MiscellaneousFlags = candidate->MiscellaneousFlags;
 
     entry->Charge = candidate->Charge;
 
@@ -459,8 +470,13 @@ void TreeWriter::ProcessJets(ExRootTreeBranch *branch, TObjArray *array)
     entry->DeltaEta = candidate->DeltaEta;
     entry->DeltaPhi = candidate->DeltaPhi;
 
-    entry->BTag = candidate->BTag;
-    entry->TauTag = candidate->TauTag;
+    entry->EfficiencyFlags = candidate->EfficiencyFlags;
+    entry->IsolationFlags = candidate->IsolationFlags;
+    entry->MiscellaneousFlags = candidate->MiscellaneousFlags;
+    entry->BFlags = candidate->BFlags;
+    entry->BFlagProb = candidate->BFlagProb;
+    entry->TauFlags = candidate->TauFlags;
+    entry->TauFlagProb = candidate->TauFlagProb;
 
     entry->Charge = candidate->Charge;
 

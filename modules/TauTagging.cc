@@ -95,7 +95,7 @@ Int_t TauTaggingPartonClassifier::GetCategory(TObject *object)
 
 TauTagging::TauTagging() :
   fClassifier(0), fFilter(0),
-  fItPartonInputArray(0), fItJetInputArray(0)
+  fItPartonInputArray(0), fItTrackInputArray(0), fItJetInputArray(0)
 {
 }
 
@@ -115,6 +115,12 @@ void TauTagging::Init()
   Int_t i, size;
 
   fDeltaR = GetDouble("DeltaR", 0.5);
+  fDeltaRTau = GetDouble("DeltaRTau", 0.5);
+  fDeltaRTrack = GetDouble("DeltaRTrack", 0.2);
+  
+  fFlagValue = GetInt("FlagValue", 1);
+  
+  fAddFlag = GetBool("AddFlag", false);
 
   // read efficiency formulas
   param = GetParam("EfficiencyFormula");
@@ -150,6 +156,9 @@ void TauTagging::Init()
   fPartonInputArray = ImportArray(GetString("PartonInputArray", "Delphes/partons"));
   fItPartonInputArray = fPartonInputArray->MakeIterator();
 
+  fTrackInputArray = ImportArray(GetString("TrackInputArray", "TrackMerger/tracks"));
+  fItTrackInputArray = fTrackInputArray->MakeIterator();
+  
   fFilter = new ExRootFilter(fPartonInputArray);
 
   fJetInputArray = ImportArray(GetString("JetInputArray", "FastJetFinder/jets"));
@@ -179,13 +188,13 @@ void TauTagging::Finish()
 
 void TauTagging::Process()
 {
-  Candidate *jet, *tau, *daughter;
+  Candidate *jet, *tau, *track, *daughter;
   TLorentzVector tauMomentum;
   Double_t pt, eta, phi;
   TObjArray *tauArray;
   map< Int_t, DelphesFormula * >::iterator itEfficiencyMap;
   DelphesFormula *formula;
-  Int_t pdgCode, charge, i;
+  Int_t pdgCode, charge, i, identifier;
 
   // select taus
   fFilter->Reset();
@@ -199,15 +208,28 @@ void TauTagging::Process()
   fItJetInputArray->Reset();
   while((jet = static_cast<Candidate *>(fItJetInputArray->Next())))
   {
+    identifier = 0;
     const TLorentzVector &jetMomentum = jet->Momentum;
     pdgCode = 0;
-    charge = gRandom->Uniform() > 0.5 ? 1 : -1;
+    charge = 0;
     eta = jetMomentum.Eta();
     phi = jetMomentum.Phi();
     pt = jetMomentum.Pt();
 
+// loop over all input tracks
+    fItTrackInputArray->Reset();
+    while((track = static_cast<Candidate *>(fItTrackInputArray->Next())))
+    {
+        if((track->Momentum).Pt() < 1.0) continue;
+        if(jetMomentum.DeltaR(track->Momentum) <= fDeltaRTrack) {
+            identifier -= 1;
+            charge += track->Charge;
+        }
+    }
+    
     // loop over all input taus
     itTauArray.Reset();
+    bool matchedTau = false;
     while((tau = static_cast<Candidate *>(itTauArray.Next())))
     {
       if(tau->D1 < 0) continue;
@@ -224,17 +246,18 @@ void TauTagging::Process()
       {
         daughter = static_cast<Candidate *>(fParticleInputArray->At(i));
         if(TMath::Abs(daughter->PID) == 16) continue;
-        tauMomentum += daughter->Momentum;
+        tauMomentum += daughter->Momentum;  
       }
 
       if(jetMomentum.DeltaR(tauMomentum) <= fDeltaR)
-      {
+      {        
+        matchedTau = true;
         pdgCode = 15;
-        charge = tau->Charge;
       }
+      if(matchedTau) identifier *= -1;
     }
     // find an efficency formula
-    itEfficiencyMap = fEfficiencyMap.find(pdgCode);
+    itEfficiencyMap = fEfficiencyMap.find(identifier);
     if(itEfficiencyMap == fEfficiencyMap.end())
     {
       itEfficiencyMap = fEfficiencyMap.find(0);
@@ -242,7 +265,21 @@ void TauTagging::Process()
     formula = itEfficiencyMap->second;
 
     // apply an efficency formula
-    jet->TauTag = gRandom->Uniform() <= formula->Eval(pt, eta);
+    
+    double x = gRandom->Uniform();
+    if (jet->TauFlagProb != 0)
+      x = jet->TauFlagProb;   
+    else
+      jet->TauFlagProb = x;
+      
+    if(x     <= formula->Eval(pt, eta)) {
+      if(fAddFlag) {
+        Int_t oldFlagValue = jet->TauFlags;
+        jet->TauFlags = oldFlagValue + fFlagValue;
+      }
+      else
+        jet->TauFlags = fFlagValue;
+    };
     // set tau charge
     jet->Charge = charge;
   }

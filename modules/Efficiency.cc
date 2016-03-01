@@ -57,6 +57,7 @@ void Efficiency::Init()
 {
   // read efficiency formula
 
+  fFormula->SetMaxima(1000000);
   fFormula->Compile(GetString("EfficiencyFormula", "1.0"));
 
   // import input array
@@ -64,9 +65,13 @@ void Efficiency::Init()
   fInputArray = ImportArray(GetString("InputArray", "ParticlePropagator/stableParticles"));
   fItInputArray = fInputArray->MakeIterator();
 
-  // create output array
-
   fOutputArray = ExportArray(GetString("OutputArray", "stableParticles"));
+  
+  fFlagValue = GetInt("FlagValue", 0);
+  
+  fAddFlag = GetBool("AddFlag", false);
+  
+  fKillUponFail = GetBool("KillUponFail", true);
 }
 
 //------------------------------------------------------------------------------
@@ -93,9 +98,18 @@ void Efficiency::Process()
     pt = candidateMomentum.Pt();
 
     // apply an efficency formula
-    if(gRandom->Uniform() > fFormula->Eval(pt, eta)) continue;
-    
-    fOutputArray->Add(candidate);
+    if(gRandom->Uniform() < fFormula->Eval(pt, eta)) {      
+      fOutputArray->Add(candidate);
+      if(fAddFlag) {
+        Int_t oldFlagValue = candidate->EfficiencyFlags;
+        candidate->EfficiencyFlags = oldFlagValue + fFlagValue;
+      }
+      else
+	    candidate->EfficiencyFlags = fFlagValue;
+    }
+    else if (!fKillUponFail) {
+      fOutputArray->Add(candidate);
+    }
   }
 }
 

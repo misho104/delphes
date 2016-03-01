@@ -91,6 +91,12 @@ void Isolation::Init()
 
   fPTSumMax = GetDouble("PTSumMax", 5.0);
 
+  fFlagValue = GetInt("FlagValue", 1);
+  
+  fAddFlag = GetBool("AddFlag", false);
+  
+  fKillUponFail = GetBool("KillUponFail", true);
+  
   fUsePTSum = GetBool("UsePTSum", false);
 
   fClassifier->fPTMin = GetDouble("PTMin", 0.5);
@@ -105,6 +111,8 @@ void Isolation::Init()
   fCandidateInputArray = ImportArray(GetString("CandidateInputArray", "Calorimeter/electrons"));
   fItCandidateInputArray = fCandidateInputArray->MakeIterator();
 
+  fOutputArray = ExportArray(GetString("OutputArray", "stableParticles"));
+  
   rhoInputArrayName = GetString("RhoInputArray", "");
   if(rhoInputArrayName[0] != '\0')
   {
@@ -115,9 +123,6 @@ void Isolation::Init()
     fRhoInputArray = 0;
   }
 
-  // create output array
-
-  fOutputArray = ExportArray(GetString("OutputArray", "electrons"));
 }
 
 //------------------------------------------------------------------------------
@@ -177,11 +182,29 @@ void Isolation::Process()
 
     // correct sum for pile-up contamination
     sum = sum - rho*fDeltaRMax*fDeltaRMax*TMath::Pi();  
+    ratio = sum/candidateMomentum.Pt();    
+    
+    if((fUsePTSum)&&(sum < fPTSumMax)) {
+      fOutputArray->Add(candidate);
+      if(fAddFlag) {
+        Int_t oldFlagValue = candidate->IsolationFlags;
+        candidate->IsolationFlags = oldFlagValue + fFlagValue;
+      }
+      else
+        candidate->IsolationFlags = fFlagValue;
+    }
+    else if((!fUsePTSum) && (ratio < fPTRatioMax)) {
+      fOutputArray->Add(candidate);
+      if(fAddFlag) {
+        Int_t oldFlagValue = candidate->IsolationFlags;
+        candidate->IsolationFlags = oldFlagValue + fFlagValue;
+      }
+      else
+        candidate->IsolationFlags = fFlagValue;
+    }
+    else if (!fKillUponFail)
+      fOutputArray->Add(candidate);
 
-    ratio = sum/candidateMomentum.Pt();
-    if((fUsePTSum && sum > fPTSumMax) || ratio > fPTRatioMax) continue;
-
-    fOutputArray->Add(candidate);
   }
 }
 

@@ -92,9 +92,11 @@ void BTagging::Init()
   DelphesFormula *formula;
   Int_t i, size;
 
-  fBitNumber = GetInt("BitNumber", 0);
-
   fDeltaR = GetDouble("DeltaR", 0.5);
+
+  fFlagValue = GetInt("FlagValue", 1);
+  
+  fAddFlag = GetBool("AddFlag", false);
 
   fClassifier->fPTMin = GetDouble("PartonPTMin", 1.0);
   fClassifier->fEtaMax = GetDouble("PartonEtaMax", 2.5);
@@ -202,8 +204,25 @@ void BTagging::Process()
     }
     formula = itEfficiencyMap->second;
 
-    // apply an efficency formula
-    jet->BTag |= (gRandom->Uniform() <= formula->Eval(pt, eta)) << fBitNumber;
+    // apply an efficency formula    
+    // make sure that the same random number is used for different BTag modules
+    //  to ensure that e.g. if a 40% flag is set then every >40% flag is also set
+    double x = gRandom->Uniform();
+    if (jet->BFlagProb != 0)
+      x = jet->BFlagProb;   
+    else
+      jet->BFlagProb = x;
+    
+    if (x <= formula->Eval(pt, eta)) {
+      if(fAddFlag) {
+        Int_t oldFlagValue = jet->BFlags;
+        jet->BFlags = oldFlagValue + fFlagValue;
+      }
+      else
+        jet->BFlags = fFlagValue;
+    }
+      
+    
   }
 }
 

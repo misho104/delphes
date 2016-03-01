@@ -34,10 +34,15 @@ private:
 
   DelphesFormula *fFormula; //!
 
+  Int_t fFlagValue; // Candidate's flag is set to this number if efficiency cut is passed
+  Bool_t fAddFlag; // If true, FlagNumber is added to the candidate's current flag value.
+                  // If false, it will replace any old value.
+  Bool_t fKillUponFail; // If true, only flagged candidates will be written to output
+
   TIterator *fItInputArray; //!
 
   const TObjArray *fInputArray; //!
-
+  
   TObjArray *fOutputArray; //!
 
   ClassDef(Efficiency, 1)

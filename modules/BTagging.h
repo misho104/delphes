@@ -38,8 +38,10 @@ public:
 
 private:
 
-  Int_t fBitNumber;
-
+  Int_t fFlagValue; // Candidate's flag is set to this number if efficiency cut is passed
+  Bool_t fAddFlag; // If true, FlagNumber is added to the candidate's current flag value.
+                  // If false, it will replace any old value.
+  
   Double_t fDeltaR;
 
   std::map< Int_t, DelphesFormula * > fEfficiencyMap; //!

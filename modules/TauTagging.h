@@ -39,6 +39,12 @@ public:
 private:
 
   Double_t fDeltaR;
+  Double_t fDeltaRTau;
+  Double_t fDeltaRTrack;
+
+  Int_t fFlagValue; // Candidate's flag is set to this number if efficiency cut is passed
+  Bool_t fAddFlag; // If true, FlagNumber is added to the candidate's current flag value.
+                  // If false, it will replace any old value.
 
   std::map< Int_t, DelphesFormula * > fEfficiencyMap; //!
   
@@ -48,9 +54,13 @@ private:
 
   TIterator *fItPartonInputArray; //!
   
+  TIterator *fItTrackInputArray; //!
+  
   TIterator *fItJetInputArray; //!
 
   const TObjArray *fParticleInputArray; //!
+
+  const TObjArray *fTrackInputArray; //!
 
   const TObjArray *fPartonInputArray; //!
   

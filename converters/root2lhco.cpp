@@ -267,11 +267,11 @@ void LHCOWriter::AnalyseMuons()
     fItJet->Reset();
     while((jet = static_cast<Jet*>(fItJet->Next())))
     {
-      if(jet->TauTag != 0)
+      /*if(jet->TauTag != 0)
       {
         ++tauCounter;
         continue;
-      }
+      }*/
 
       jetDR = element->P4().DeltaR(jet->P4());
       if(jetDR < minDR)
@@ -292,10 +292,10 @@ void LHCOWriter::AnalyseMuons()
 
     fDblParam[4] = element->Charge;
 
-    if(minIndex >= 0)
+    /*if(minIndex >= 0)
     {
       fDblParam[5] = fIntParam[0] + fBranchMuon->GetEntriesFast() - muonCounter + tauCounter + minIndex;
-    }
+    }*/
 
     ratET = sumET/element->PT;
     fDblParam[6] = Float_t(TMath::Nint(sumPT)) + (ratET < 1.0 ? ratET : 0.99);
@@ -316,7 +316,7 @@ void LHCOWriter::AnalyseTauJets()
   fItJet->Reset();
   while((element = static_cast<Jet*>(fItJet->Next())))
   {
-    if(element->TauTag == 0) continue;
+    //if(element->TauTag == 0) continue;
 
     Reset();
 
@@ -352,7 +352,7 @@ void LHCOWriter::AnalyseJets()
   fItJet->Reset();
   while((element = static_cast<Jet*>(fItJet->Next())))
   {
-    if(element->TauTag != 0) continue;
+    //if(element->TauTag != 0) continue;
 
     Reset();
 
@@ -370,7 +370,7 @@ void LHCOWriter::AnalyseJets()
     fDblParam[2] = element->PT;
     fDblParam[3] = element->Mass;
     fDblParam[4] = counter;
-    fDblParam[5] = element->BTag;
+    //fDblParam[5] = element->BTag;
     fDblParam[6] = element->EhadOverEem;
 
     Write();

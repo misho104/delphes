@@ -198,6 +198,10 @@ public:
 
   TRefArray Particles; // references to generated particles
 
+  Int_t EfficiencyFlags; // Saves possible identification or reconstruction efficiency flags
+  Int_t IsolationFlags; // Saves possible isolation flags
+  Int_t MiscellaneousFlags; // Saves possible other flags
+
   static CompBase *fgCompare; //!
   const CompBase *GetCompare() const { return fgCompare; }
 
@@ -222,6 +226,10 @@ public:
 
   TRef Particle; // reference to generated particle
 
+  Int_t EfficiencyFlags; // Saves possible identification or reconstruction efficiency flags
+  Int_t IsolationFlags; // Saves possible isolation flags
+  Int_t MiscellaneousFlags; // Saves possible other flags
+
   static CompBase *fgCompare; //!
   const CompBase *GetCompare() const { return fgCompare; }
 
@@ -243,6 +251,10 @@ public:
   Int_t Charge; // muon charge
 
   TRef Particle; // reference to generated particle
+
+  Int_t EfficiencyFlags; // Saves possible identification or reconstruction efficiency flags
+  Int_t IsolationFlags; // Saves possible isolation flags
+  Int_t MiscellaneousFlags; // Saves possible other flags
 
   static CompBase *fgCompare; //!
   const CompBase *GetCompare() const { return fgCompare; }
@@ -267,8 +279,14 @@ public:
   Float_t DeltaEta;  // jet radius in pseudorapidity
   Float_t DeltaPhi;  // jet radius in azimuthal angle
 
-  UInt_t BTag; // 0 or 1 for a jet that has been tagged as containing a heavy quark
-  UInt_t TauTag; // 0 or 1 for a jet that has been tagged as a tau
+  Int_t EfficiencyFlags; // Saves possible identification or reconstruction efficiency flags
+  Int_t IsolationFlags; // Saves possible isolation flags
+  Int_t MiscellaneousFlags; // Saves possible other flags
+  
+  Int_t BFlags; // Saves possible BJetFlags
+  Float_t BFlagProb; // Saves the random number that is checked against different BFlag probabilities
+  Int_t TauFlags; // Saves possible TauJetFlags
+  Float_t TauFlagProb; // Saves the random number that is checked against different TauFlag probabilities
 
   Int_t Charge; // tau charge
 
@@ -366,9 +384,15 @@ public:
   
   Int_t IsPU;
   Int_t IsConstituent;
+
+  Int_t EfficiencyFlags; // Saves possible identification or reconstruction efficiency flags
+  Int_t IsolationFlags; // Saves possible isolation flags
+  Int_t MiscellaneousFlags; // Saves possible other flags
   
-  UInt_t BTag;
-  UInt_t TauTag;
+  Int_t BFlags; // Saves possible BJetFlags
+  Float_t BFlagProb; // Saves the random number that is checked against different BFlag probabilities
+  Int_t TauFlags; // Saves possible TauJetFlags
+  Float_t TauFlagProb; // Saves the random number that is checked against different TauFlag probabilities        
 
   Float_t Eem;
   Float_t Ehad;
