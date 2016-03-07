@@ -28,7 +28,7 @@
  *
  */
 
-#include "TNamed.h"
+#include <TNamed.h>
 
 #include <map>
 #include <set>

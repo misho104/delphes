@@ -19,7 +19,7 @@
 #ifndef DelphesFormula_h
 #define DelphesFormula_h
 
-#include "TFormula.h"
+#include <TFormula.h>
 
 class DelphesFormula: public TFormula
 {
