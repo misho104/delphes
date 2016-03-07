@@ -57,7 +57,6 @@ void Efficiency::Init()
 {
   // read efficiency formula
 
-  fFormula->SetMaxima(1000000);
   fFormula->Compile(GetString("EfficiencyFormula", "1.0"));
 
   // import input array
