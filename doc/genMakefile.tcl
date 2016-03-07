@@ -5,6 +5,7 @@ set suffix " \\\n\t"
 
 set srcSuf {.$(SrcSuf)}
 set objSuf {.$(ObjSuf)}
+set pcmSuf {$(PcmSuf)}
 set exeSuf {$(ExeSuf)}
 
 proc dependencies {fileName firstLine {force 1} {command {}}} {
@@ -51,11 +52,11 @@ proc dependencies {fileName firstLine {force 1} {command {}}} {
   close $fid
 }
 
-proc dictDeps {dictVar args} {
+proc dictDeps {dictPrefix args} {
 
-  global prefix suffix srcSuf objSuf
+  global prefix suffix srcSuf objSuf pcmSuf
 
-  set dict [eval glob -nocomplain $args]
+  set dict [lsort [eval glob -nocomplain $args]]
 
   set dictSrcFiles {}
   set dictObjFiles {}
@@ -66,25 +67,30 @@ proc dictDeps {dictVar args} {
 
     lappend dictSrcFiles $dictName$srcSuf
     lappend dictObjFiles $dictName$objSuf
+    lappend dictPcmFiles [file tail $dictName$pcmSuf]
 
     dependencies $fileName "$dictName$srcSuf:$suffix$fileName"
+
+    puts -nonewline [file tail $dictName$pcmSuf]:$suffix
+    puts -nonewline $dictName$pcmSuf$suffix
+    puts -nonewline $dictName$srcSuf
+    puts {}
   }
 
-  puts -nonewline "${dictVar} += $suffix"
-  puts [join $dictSrcFiles $suffix]
-  puts {}
-
-  puts -nonewline "${dictVar}_OBJ += $suffix"
+  puts -nonewline "${dictPrefix}_OBJ += $suffix"
   puts [join $dictObjFiles $suffix]
   puts {}
 
+  puts -nonewline "${dictPrefix}_PCM += $suffix"
+  puts [join $dictPcmFiles $suffix]
+  puts {}
 }
 
 proc sourceDeps {srcPrefix args} {
 
   global prefix suffix srcSuf objSuf
 
-  set source [eval glob -nocomplain $args]
+  set source [lsort [eval glob -nocomplain $args]]
 
   set srcObjFiles {}
   set srcObjFilesPythia8 {}
@@ -117,7 +123,7 @@ proc tclDeps {} {
 
   global prefix suffix srcSuf objSuf
 
-  set source [glob -nocomplain {external/tcl/*.c}]
+  set source [lsort [glob -nocomplain {external/tcl/*.c}]]
 
   set srcObjFiles {}
 
@@ -141,7 +147,7 @@ proc executableDeps {args} {
 
   global prefix suffix objSuf exeSuf
 
-  set executable [eval glob -nocomplain $args]
+  set executable [lsort [eval glob -nocomplain $args]]
 
   set exeFiles {}
 
@@ -190,34 +196,36 @@ puts {
 
 include doc/Makefile.arch
 
-ifeq ($(ARCH),macosx64)
-UNDEFOPT = dynamic_lookup
-endif
+ROOT_MAJOR := $(shell $(RC) --version | cut -d'.' -f1)
 
 SrcSuf = cc
+PcmSuf = _rdict.pcm
 
 CXXFLAGS += $(ROOTCFLAGS) -Wno-write-strings -D_FILE_OFFSET_BITS=64 -DDROP_CGAL -I. -Iexternal -Iexternal/tcl
 DELPHES_LIBS = $(shell $(RC) --libs) -lEG $(SYSLIBS)
-DISPLAY_LIBS = $(shell $(RC) --evelibs) $(SYSLIBS)
+DISPLAY_LIBS = $(shell $(RC) --evelibs) -lGuiHtml  $(SYSLIBS)
 
 ifneq ($(CMSSW_FWLITE_INCLUDE_PATH),)
 HAS_CMSSW = true
 CXXFLAGS += -std=c++0x -I$(subst :, -I,$(CMSSW_FWLITE_INCLUDE_PATH))
-DELPHES_LIBS += -L$(subst include,lib,$(subst :, -L,$(CMSSW_FWLITE_INCLUDE_PATH)))
+OPT_LIBS += -L$(subst include,lib,$(subst :, -L,$(CMSSW_FWLITE_INCLUDE_PATH)))
 ifneq ($(CMSSW_RELEASE_BASE),)
 CXXFLAGS += -I$(CMSSW_RELEASE_BASE)/src
 endif
 ifneq ($(LD_LIBRARY_PATH),)
-DELPHES_LIBS += -L$(subst include,lib,$(subst :, -L,$(LD_LIBRARY_PATH)))
+OPT_LIBS += -L$(subst include,lib,$(subst :, -L,$(LD_LIBRARY_PATH)))
 endif
-DELPHES_LIBS += -lFWCoreFWLite -lDataFormatsFWLite -lDataFormatsPatCandidates -lDataFormatsLuminosity -lCommonToolsUtils
+OPT_LIBS += -lGenVector -lFWCoreFWLite -lDataFormatsFWLite -lDataFormatsCommon -lDataFormatsPatCandidates -lDataFormatsLuminosity -lSimDataFormatsGeneratorProducts -lCommonToolsUtils -lDataFormatsCommon
 endif
 
 ifneq ($(PROMC),)
 HAS_PROMC = true
-CXXFLAGS += -I$(PROMC)/include
-DELPHES_LIBS += -L$(PROMC)/lib -lprotoc -lprotobuf -lprotobuf-lite -lcbook -lz
+CXXFLAGS += -I$(PROMC)/include -I$(PROMC)/src
+OPT_LIBS += -L$(PROMC)/lib -lpromc -lprotoc -lprotobuf -lprotobuf-lite -lcbook -lz
 endif
+
+DELPHES_LIBS += $(OPT_LIBS)
+DISPLAY_LIBS += $(OPT_LIBS)
 
 ###
 
@@ -246,7 +254,6 @@ puts {}
 
 puts {ifeq ($(HAS_PROMC),true)}
 executableDeps {readers/DelphesProMC.cpp}
-sourceDeps {DELPHES} {external/ProMC/*.cc}
 puts {endif}
 puts {}
 
@@ -260,7 +267,7 @@ dictDeps {DELPHES_DICT} {classes/ClassesLinkDef.h} {modules/ModulesLinkDef.h} {e
 
 dictDeps {DISPLAY_DICT} {display/DisplayLinkDef.h}
 
-sourceDeps {DELPHES} {classes/*.cc} {modules/*.cc} {external/ExRootAnalysis/*.cc} {external/fastjet/*.cc} {external/fastjet/tools/*.cc} {external/fastjet/plugins/*/*.cc}
+sourceDeps {DELPHES} {classes/*.cc} {modules/*.cc} {external/ExRootAnalysis/*.cc} {external/Hector/*.cc} {external/fastjet/*.cc} {external/fastjet/tools/*.cc} {external/fastjet/plugins/*/*.cc} {external/fastjet/contribs/*/*.cc} 
 
 sourceDeps {DISPLAY} {display/*.cc}
 
@@ -272,9 +279,13 @@ puts {
 
 ###
 
+ifeq ($(ROOT_MAJOR),6)
+all: $(DELPHES) $(DELPHES_DICT_PCM) $(EXECUTABLE)
+display: $(DISPLAY) $(DISPLAY_DICT_PCM)
+else
 all: $(DELPHES) $(EXECUTABLE)
-
 display: $(DISPLAY)
+endif
 
 $(DELPHES): $(DELPHES_DICT_OBJ) $(DELPHES_OBJ) $(TCL_OBJ)
 	@mkdir -p $(@D)
@@ -335,9 +346,7 @@ clean:
 	@rm -rf tmp
 
 distclean: clean
-	@rm -f $(DELPHES) $(DELPHESLIB) $(DISPLAY) $(DISPLAYLIB) $(EXECUTABLE) Makefile
-
-maintainer-clean: distclean
+	@rm -f $(DELPHES) $(DELPHESLIB) $(DELPHES_DICT_PCM) $(DISPLAY) $(DISPLAYLIB) $(DISPLAY_DICT_PCM) $(EXECUTABLE)
 
 dist:
 	@echo ">> Building $(DISTTAR)"
@@ -349,17 +358,21 @@ dist:
 
 ###
 
-.SUFFIXES: .$(SrcSuf) .$(ObjSuf) .$(DllSuf)
+.SUFFIXES: .$(SrcSuf) .$(ObjSuf) .$(DllSuf) $(PcmSuf)
 
 %Dict.$(SrcSuf):
 	@mkdir -p $(@D)
 	@echo ">> Generating $@"
-	@$(ROOTCINT) -f $@ -c -Iexternal $<
+	@rootcint -f $@ -c -Iexternal $<
 	@echo "#define private public" > $@.arch
 	@echo "#define protected public" >> $@.arch
 	@mv $@ $@.base
 	@cat $@.arch $< $@.base > $@
 	@rm $@.arch $@.base
+
+%Dict$(PcmSuf):
+	@echo ">> Copying $@"
+	@cp $< $@
 
 $(DELPHES_OBJ): tmp/%.$(ObjSuf): %.$(SrcSuf)
 	@mkdir -p $(@D)
@@ -384,7 +397,7 @@ $(DISPLAY_DICT_OBJ): %.$(ObjSuf): %.$(SrcSuf)
 $(TCL_OBJ): tmp/%.$(ObjSuf): %.c
 	@mkdir -p $(@D)
 	@echo ">> Compiling $<"
-	@gcc $(CXXFLAGS) -c $< $(OutPutOpt)$@
+	@$(CC) $(patsubst -std=%,,$(CXXFLAGS)) -c $< $(OutPutOpt)$@
 
 $(EXECUTABLE_OBJ): tmp/%.$(ObjSuf): %.cpp
 	@mkdir -p $(@D)
