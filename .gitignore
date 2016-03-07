@@ -1,1 +1,14 @@
 Makefile
+
+/*.pcm
+/tmp
+
+/Example1
+/libDelphes.so
+/DelphesHepMC
+/DelphesLHEF
+/DelphesSTDHEP
+/hepmc2pileup
+/root2pileup
+/stdhep2pileup
+/pileup2root
