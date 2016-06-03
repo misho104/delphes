@@ -1,0 +1,16 @@
+/Makefile
+
+/tmp
+/*.pcm
+
+/DelphesHepMC
+/DelphesLHEF
+/DelphesSTDHEP
+/Example1
+/hepmc2pileup*
+/lhco2root
+/libDelphes.so
+/pileup2root
+/root2lhco
+/root2pileup
+/stdhep2pileup
