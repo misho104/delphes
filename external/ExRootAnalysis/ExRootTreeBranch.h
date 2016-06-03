@@ -14,7 +14,7 @@
  *
  */
 
-#include "Rtypes.h"
+#include <Rtypes.h>
 
 class TTree;
 class TClonesArray;

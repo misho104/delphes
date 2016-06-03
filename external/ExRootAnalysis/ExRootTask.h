@@ -13,7 +13,7 @@
  *
  */
 
-#include "TTask.h"
+#include <TTask.h>
 
 #include "ExRootAnalysis/ExRootConfReader.h"
 

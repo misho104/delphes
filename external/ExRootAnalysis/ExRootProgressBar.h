@@ -1,7 +1,7 @@
 #ifndef ExRootProgressBar_h
 #define ExRootProgressBar_h
 
-#include "Rtypes.h"
+#include <Rtypes.h>
 
 class ExRootProgressBar
 {
